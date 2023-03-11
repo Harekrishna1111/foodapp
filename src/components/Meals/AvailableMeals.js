@@ -1,7 +1,7 @@
 import classes from "./AvailableMeals.module.css";
 import Card from "../UI/Card";
 import MealItem from "./MealItem/MealItem";
-const DUMMY_MEALS = [
+const food= [
   {
     id: "m1",
     name: "Sushi",
@@ -27,19 +27,54 @@ const DUMMY_MEALS = [
     price: 18.99,
   },
 ];
+
+
+
 const AvailableMeals = () => {
-  const mealslist = DUMMY_MEALS.map((meal) => (
+  const mealList = food.map((meal) => (
     <MealItem
+      id={meal.id}
       key={meal.id}
       name={meal.name}
       description={meal.description}
       price={meal.price}
     />
   ));
+
+
+  
+const submit = ()=>{
+  fetch("https://meals-b0dce-default-rtdb.firebaseio.com/food.json/",
+  {
+    "method": 'POST',
+  
+    headers: {
+      'Content-Type': 'application/json'
+    },  
+    body: JSON.stringify(food)
+  } ).then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+}
+
+const mealsHandler = () => {
+  fetch("https://meals-b0dce-default-rtdb.firebaseio.com/food.json/")
+  .then(response => response.json())
+  .then(data => {
+    const food = Object.values(data);
+    console.log(food)
+    // Do something with the food array
+  })
+  .catch(error => console.error(error));
+
+
+}
   return (
     <section className={classes.meals}>
       <ul>
-        <Card>{mealslist}</Card>
+        <button onClick={submit}>submit</button>
+        <button onClick={mealsHandler}>Add New meals</button>
+        <Card>{mealList}</Card>
       </ul>
     </section>
   );
