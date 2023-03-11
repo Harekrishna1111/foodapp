@@ -41,7 +41,7 @@ const AvailableMeals = () => {
     />
   ));
 
-
+//my name is krishna
   
 const submit = ()=>{
   fetch("https://meals-b0dce-default-rtdb.firebaseio.com/food.json/",
